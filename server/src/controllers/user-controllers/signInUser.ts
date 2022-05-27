@@ -23,10 +23,10 @@ export const signInUser = async (req: Request, res: Response) => {
         message: 'User with that email does not exist',
       });
     } else if (await bcrypt.compare(password, data.rows[0].password)) {
-      res.status(200).json({
-        message: 'User signed in successfully',
-        user: data.rows[0],
-      });
+      // Redirect to designated Route
+      const { id } = data.rows[0];
+      res.json(data.rows[0]);
+      // res.status(200).redirect(`/api/users, ${id}`);
     } else {
       res.status(401).json({
         message: 'Wrong Password',

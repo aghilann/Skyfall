@@ -15,8 +15,7 @@ app.use(express.json());
 app.use('/api/users', require('./routes/users'));
 
 app.get('/', (req: Request, res: Response): void => {
-  const user = req.user ? 'Guest' : req.user;
-  res.status(200).json({ user });
+  res.status(200).json({ message: 'Hello World' });
 });
 
 app.listen(PORT, (): void => {
