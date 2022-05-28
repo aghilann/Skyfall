@@ -23,7 +23,6 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          cd server
           npm install
           npm run build --if-present
           npm run test --if-present
@@ -53,5 +52,5 @@ jobs:
         with:
           app-name: 'skyfall-server'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_00FE502F2D1F4889B4590034F917E91A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4DEA4F0E7BBA446B93DB2223E78CDAA8 }}
           package: .
