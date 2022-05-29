@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'skyfall-server'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_01E6DA38B8B84C57B099D497AAC82140 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4DEA4F0E7BBA446B93DB2223E78CDAA8 }}
           package: .
