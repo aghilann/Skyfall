@@ -66,17 +66,33 @@ export function AuthenticationForm({
       confirmPassword: "Passwords don't match. Try again",
     },
   });
-  const handleSubmit = () => {
-    setLoading(true);
-    setError('');
-    setTimeout(() => {
+
+  const handleRegister = async () => {
+    await setTimeout(() => {
       setLoading(false);
-      setError(
-        formType === 'register'
-          ? 'User with this email already exists'
-          : 'User with this email does not exist'
-      );
-    }, 3000);
+    }, 2000);
+  };
+
+  const handleLogin = async () => {
+    await setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    formType === 'register' ? handleRegister() : handleLogin();
+    form.reset();
+    // setLoading(true);
+    // setError('');
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   setError(
+    //     formType === 'register'
+    //       ? 'User with this email already exists'
+    //       : 'User with this email does not exist'
+    //   );
+    // }, 3000);
   };
 
   return (
