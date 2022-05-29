@@ -145,7 +145,7 @@ export const DEFAULT_COLORS = {
     '#b2f2bb',
     '#8ce99a',
     '#69db7c',
-    '#51cf66',
+    '#00DC82',
     '#40c057',
     '#37b24d',
     '#2f9e44',

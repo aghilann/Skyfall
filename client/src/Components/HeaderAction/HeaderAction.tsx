@@ -10,6 +10,7 @@ import {
 } from '@mantine/core';
 
 import { ChevronDown } from 'tabler-icons-react';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
 
@@ -78,9 +79,13 @@ interface HeaderActionProps {
 export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
   const { classes } = useStyles();
   const [opened, toggleOpened] = useBooleanToggle(false);
-  const items = links.map((link: HeaderItem) => {
-    const menuItems = link.links?.map((item: any) => (
-      <Menu.Item key={item.link}>{item.label}</Menu.Item>
+  const items = links.map((link) => {
+    const menuItems = link.links?.map((item) => (
+      <Menu.Item key={item.link}>
+        <Link to={item.link} className={classes.link}>
+          {item.label}
+        </Link>
+      </Menu.Item>
     ));
 
     if (menuItems) {
@@ -132,7 +137,7 @@ export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
             className={classes.burger}
             size="sm"
           />
-          {/* <MantineLogo /> Add Company Logo*/}
+          {/* <MantineLogo /> */}
         </Group>
         <Group spacing={5} className={classes.links}>
           {items}
