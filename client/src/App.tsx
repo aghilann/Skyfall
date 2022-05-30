@@ -7,6 +7,7 @@ import { RootState } from '././Redux/store';
 import { themeObject } from './Data/theme-object';
 import { useSelector } from 'react-redux';
 
+var Hello = "Hello"
 function App() {
   const theme = useSelector((state: RootState) => state.theme);
   return (
