@@ -6,6 +6,8 @@ import {
   Group,
   Header,
   Menu,
+  Paper,
+  Transition,
   createStyles,
 } from '@mantine/core';
 
@@ -26,6 +28,22 @@ const useStyles = createStyles((theme) => ({
 
   links: {
     [theme.fn.smallerThan('sm')]: {
+      display: 'none',
+    },
+  },
+
+  dropdown: {
+    position: 'absolute',
+    top: HEADER_HEIGHT,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopWidth: 0,
+    // overflow: 'hidden',
+
+    [theme.fn.largerThan('sm')]: {
       display: 'none',
     },
   },
@@ -81,11 +99,9 @@ export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
   const [opened, toggleOpened] = useBooleanToggle(false);
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link}>
-        <Link to={item.link} className={classes.link}>
-          {item.label}
-        </Link>
-      </Menu.Item>
+      <Link to={item.link} className={classes.link}>
+        <Menu.Item key={item.link}>{item.label}</Menu.Item>
+      </Link>
     ));
 
     if (menuItems) {
@@ -103,6 +119,7 @@ export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
               className={classes.link}
               onClick={(event) => event.preventDefault()}
             >
+              <Link to={link.link} />
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
                 <ChevronDown size={12} />
@@ -122,7 +139,9 @@ export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
         className={classes.link}
         onClick={(event) => event.preventDefault()}
       >
-        {link.label}
+        <Link to={link.link} className={classes.link}>
+          {link.label}
+        </Link>
       </a>
     );
   });
@@ -137,6 +156,17 @@ export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
             className={classes.burger}
             size="sm"
           />
+          <Transition
+            transition="pop-top-right"
+            duration={200}
+            mounted={opened}
+          >
+            {(styles) => (
+              <Paper className={classes.dropdown} withBorder style={styles}>
+                {items}
+              </Paper>
+            )}
+          </Transition>
           {/* <MantineLogo /> */}
         </Group>
         <Group spacing={5} className={classes.links}>

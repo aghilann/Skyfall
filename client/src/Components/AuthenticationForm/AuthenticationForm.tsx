@@ -13,6 +13,7 @@ import {
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 import React, { useState } from 'react';
 
+import TypeWritter from 'typewriter-effect';
 import { useForm } from '@mantine/hooks';
 
 export interface AuthenticationFormProps {
@@ -83,16 +84,6 @@ export function AuthenticationForm({
     setLoading(true);
     formType === 'register' ? handleRegister() : handleLogin();
     form.reset();
-    // setLoading(true);
-    // setError('');
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   setError(
-    //     formType === 'register'
-    //       ? 'User with this email already exists'
-    //       : 'User with this email does not exist'
-    //   );
-    // }, 3000);
   };
 
   return (
