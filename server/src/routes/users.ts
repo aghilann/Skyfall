@@ -9,7 +9,7 @@ const {
 } = require('../controllers/user-controllers/index');
 
 // Sign in will redirect to :id
-router.get('/sign-in', signInUser);
+router.post('/sign-in', signInUser);
 router.route('/').get(getAllUsers).post(createUser).put(updateUser);
 router.get('/:id', getUserByID);
 

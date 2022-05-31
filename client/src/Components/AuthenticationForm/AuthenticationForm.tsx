@@ -12,7 +12,10 @@ import {
 } from '@mantine/core';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 import React, { useEffect, useState } from 'react';
+import { signInUser, signOutUser } from '../../Redux/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from '../../Redux/store';
 import TypeWritter from 'typewriter-effect';
 import { useForm } from '@mantine/hooks';
 
@@ -29,14 +32,72 @@ export function AuthenticationForm({
   noSubmit,
   style,
 }: AuthenticationFormProps): JSX.Element {
+  const currentUser = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const theme = useMantineTheme();
 
-  useEffect(() => {
-    console.log(formType);
-  }, []);
+  const handleSubmit = async () => {
+    setLoading(true);
+    formType === 'register' ? await handleRegister() : await handleLogin();
+    form.reset();
+  };
+
+  const handleRegister = async () => {
+    const { email, password, termsOfService, confirmPassword } = form.values;
+    if (!email) {
+      setError('Email is required');
+      return;
+    }
+    if (!password) {
+      setError('Password is required');
+      return;
+    }
+    if (!termsOfService) {
+      setError('You must agree to the terms of service');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Your passwords must match');
+      return;
+    }
+    await registerUser();
+    setLoading(false);
+  };
+
+  const registerUser = async () => {
+    console.log('ABout to run fetch user');
+    const { firstName, middleName, lastName, email, password } = form.values;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName,
+        middleName,
+        lastName,
+        email,
+        password,
+      }),
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/users', options);
+      const data = await response.json();
+      if (response.status === 201) {
+        /// !!! Register user to sign-in page
+      } else {
+        setError(data.message);
+      }
+    } catch (error: any) {
+      setError(error.message);
+    }
+    setLoading(false);
+  };
 
   const toggleFormType = () => {
     setFormType((current) => (current === 'register' ? 'login' : 'register'));
@@ -51,7 +112,7 @@ export function AuthenticationForm({
       email: '',
       password: '',
       confirmPassword: '',
-      termsOfService: true,
+      termsOfService: false,
     },
 
     validationRules: {
@@ -62,6 +123,7 @@ export function AuthenticationForm({
       password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
       confirmPassword: (val, values) =>
         formType === 'login' || val === values?.password,
+      termsOfService: (value) => value,
     },
 
     errorMessages: {
@@ -69,25 +131,12 @@ export function AuthenticationForm({
       password:
         'Password should contain 1 number, 1 letter and at least 6 characters',
       confirmPassword: "Passwords don't match. Try again",
+      termsOfService: 'You must agree to the terms of service',
     },
   });
 
-  const handleRegister = async () => {
-    await setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
-
   const handleLogin = async () => {
-    await setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
-
-  const handleSubmit = async () => {
-    setLoading(true);
-    formType === 'register' ? handleRegister() : handleLogin();
-    form.reset();
+    // Handle login
   };
 
   return (

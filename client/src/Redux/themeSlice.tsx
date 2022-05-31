@@ -16,11 +16,11 @@ export const themeSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.colorScheme = state.colorScheme !== 'light' ? 'light' : 'dark';
+      return state;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
 export const { toggleDarkMode } = themeSlice.actions;
-export const selectCount = (state: RootState) => state.counter.value;
 export default themeSlice.reducer;

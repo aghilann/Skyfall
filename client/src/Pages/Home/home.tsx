@@ -1,6 +1,6 @@
 import { AuthenticationForm, HeaderAction } from '../../Components/index';
+import { Button, Container } from '@mantine/core';
 
-import { Container } from '@mantine/core';
 import { Hero } from '../Landing/Hero';
 import React from 'react';
 import { headerData } from '../../Components/HeaderAction/header-data';

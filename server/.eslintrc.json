@@ -25,6 +25,7 @@
         "endOfLine": "auto"
       }
     ],
+    "no-shadow": "off",
     "@typescript-eslint/ban-types": "off",
     "import/prefer-default-export": "off",
     "import/no-import-module-exports": "off",
