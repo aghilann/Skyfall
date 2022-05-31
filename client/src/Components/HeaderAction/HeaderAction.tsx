@@ -99,7 +99,7 @@ export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
   const [opened, toggleOpened] = useBooleanToggle(false);
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
-      <Link to={item.link} className={classes.link}>
+      <Link to={item.link} className={classes.link} key={item.link}>
         <Menu.Item key={item.link}>{item.label}</Menu.Item>
       </Link>
     ));
@@ -114,35 +114,33 @@ export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
           placement="end"
           gutter={1}
           control={
-            <a
-              href={link.link}
+            <Link
+              key={link.link}
+              to={link.link}
               className={classes.link}
               onClick={(event) => event.preventDefault()}
             >
-              <Link to={link.link} />
               <Center>
                 <span className={classes.linkLabel}>{link.label}</span>
                 <ChevronDown size={12} />
               </Center>
-            </a>
+            </Link>
           }
         >
           {menuItems}
         </Menu>
       );
     }
-
+    // Generate random string for key
     return (
-      <a
+      <Link
         key={link.label}
-        href={link.link}
+        to={link.link}
         className={classes.link}
         onClick={(event) => event.preventDefault()}
       >
-        <Link to={link.link} className={classes.link}>
-          {link.label}
-        </Link>
-      </a>
+        {link.label}
+      </Link>
     );
   });
 

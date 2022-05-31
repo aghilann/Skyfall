@@ -11,7 +11,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import TypeWritter from 'typewriter-effect';
 import { useForm } from '@mantine/hooks';
@@ -33,6 +33,10 @@ export function AuthenticationForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const theme = useMantineTheme();
+
+  useEffect(() => {
+    console.log(formType);
+  }, []);
 
   const toggleFormType = () => {
     setFormType((current) => (current === 'register' ? 'login' : 'register'));
