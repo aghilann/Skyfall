@@ -11,13 +11,15 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { signInUser, signOutUser } from '../../Redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Navigate } from 'react-router-dom';
 import { RootState } from '../../Redux/store';
 import TypeWritter from 'typewriter-effect';
 import { useForm } from '@mantine/hooks';
+import { useNavigate } from 'react-router-dom';
 
 export interface AuthenticationFormProps {
   noShadow?: boolean;
@@ -37,12 +39,17 @@ export function AuthenticationForm({
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
+  const navigate = useNavigate();
   const theme = useMantineTheme();
+  // Count the number of times the number of page refreshes using useRef hook
+  const pageRefreshCount = useRef(0);
+  useEffect(() => {
+    pageRefreshCount.current++;
+  });
 
   const handleSubmit = async () => {
     setLoading(true);
     formType === 'register' ? await handleRegister() : await handleLogin();
-    form.reset();
   };
 
   const handleRegister = async () => {
@@ -64,12 +71,11 @@ export function AuthenticationForm({
       setError('Your passwords must match');
       return;
     }
-    await registerUser();
+    await fetchRequestHandleRegister();
     setLoading(false);
   };
 
-  const registerUser = async () => {
-    console.log('ABout to run fetch user');
+  const fetchRequestHandleRegister = async () => {
     const { firstName, middleName, lastName, email, password } = form.values;
     const options = {
       method: 'POST',
@@ -89,7 +95,7 @@ export function AuthenticationForm({
       const response = await fetch('http://localhost:5000/api/users', options);
       const data = await response.json();
       if (response.status === 201) {
-        /// !!! Register user to sign-in page
+        toggleFormType();
       } else {
         setError(data.message);
       }
@@ -120,7 +126,7 @@ export function AuthenticationForm({
       middleName: (value) => formType === 'login' || value.trim().length >= 0,
       lastName: (value) => formType === 'login' || value.trim().length >= 2,
       email: (value) => /^\S+@\S+$/.test(value),
-      password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
+      // password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
       confirmPassword: (val, values) =>
         formType === 'login' || val === values?.password,
       termsOfService: (value) => value,
@@ -136,7 +142,34 @@ export function AuthenticationForm({
   });
 
   const handleLogin = async () => {
-    // Handle login
+    const { email, password } = form.values;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    };
+
+    try {
+      const response = await fetch(
+        'http://localhost:5000/api/users/sign-in',
+        options
+      );
+      const data = await response.json();
+      if (response.status === 200) {
+        dispatch(signInUser(data));
+        navigate('/');
+      } else {
+        setError(data.message);
+      }
+    } catch (error: any) {
+      setError(error.message);
+    }
+    setLoading(false);
   };
 
   return (
@@ -151,7 +184,12 @@ export function AuthenticationForm({
         padding: noPadding ? 0 : '1.5rem',
       })}
     >
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          form.onSubmit(handleSubmit);
+        }}
+      >
         <LoadingOverlay visible={loading} />
         {formType === 'register' && (
           <Group grow>
@@ -166,7 +204,7 @@ export function AuthenticationForm({
             <TextInput
               placeholder="Your middle name (optional)"
               label="Middle name"
-              {...form.getInputProps('lastName')}
+              {...form.getInputProps('middleName')}
             />
             <TextInput
               required
@@ -174,6 +212,7 @@ export function AuthenticationForm({
               label="Last name"
               {...form.getInputProps('lastName')}
             />
+            {JSON.stringify(pageRefreshCount)}
           </Group>
         )}
 
@@ -233,8 +272,7 @@ export function AuthenticationForm({
                 ? 'Have an account? Login'
                 : "Don't have an account? Register"}
             </Anchor>
-
-            <Button type="submit">
+            <Button onClick={handleSubmit} size="sm" type="submit">
               {formType === 'register' ? 'Register' : 'Login'}
             </Button>
           </Group>

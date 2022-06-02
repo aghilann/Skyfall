@@ -8,8 +8,8 @@ import { headerData } from '../../Components/HeaderAction/header-data';
 export const Home: React.FC = () => {
   return (
     <Container>
-      <HeaderAction {...headerData} />
-      <AuthenticationForm />
+      {/* <HeaderAction {...headerData} />I am the home page
+      <AuthenticationForm /> */}
       <Hero />
     </Container>
   );
