@@ -42,10 +42,6 @@ export function AuthenticationForm({
   const navigate = useNavigate();
   const theme = useMantineTheme();
   // Count the number of times the number of page refreshes using useRef hook
-  const pageRefreshCount = useRef(0);
-  useEffect(() => {
-    pageRefreshCount.current++;
-  });
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -212,7 +208,6 @@ export function AuthenticationForm({
               label="Last name"
               {...form.getInputProps('lastName')}
             />
-            {JSON.stringify(pageRefreshCount)}
           </Group>
         )}
 
