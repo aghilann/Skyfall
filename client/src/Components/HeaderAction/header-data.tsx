@@ -1,8 +1,8 @@
 export const headerData = {
   links: [
     {
-      link: '/about',
-      label: 'Features',
+      link: '/landing',
+      label: 'Landing',
     },
     {
       link: '#1',
@@ -27,8 +27,8 @@ export const headerData = {
       ],
     },
     {
-      link: '/about',
-      label: 'About',
+      link: '/auth',
+      label: 'Auth',
     },
     {
       link: '/pricing',

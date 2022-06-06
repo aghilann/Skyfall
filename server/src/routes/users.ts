@@ -1,5 +1,5 @@
-const express = require('express');
-const router = express.Router();
+const userExpress = require('express');
+const userRouter = userExpress.Router();
 const {
   createUser,
   getAllUsers,
@@ -9,8 +9,8 @@ const {
 } = require('../controllers/user-controllers/index');
 
 // Sign in will redirect to :id
-router.post('/sign-in', signInUser);
-router.route('/').get(getAllUsers).post(createUser).put(updateUser);
-router.get('/:id', getUserByID);
+userRouter.post('/sign-in', signInUser);
+userRouter.route('/').get(getAllUsers).post(createUser).put(updateUser);
+userRouter.get('/:id', getUserByID);
 
-module.exports = router;
+module.exports = userRouter;

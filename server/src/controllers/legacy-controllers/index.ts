@@ -1,0 +1,1 @@
+export { getLegacy } from './getLegacy';

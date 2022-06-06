@@ -14,6 +14,7 @@ import { Check } from 'tabler-icons-react';
 import React from 'react';
 import TypeWriter from 'typewriter-effect';
 import image from './image.svg';
+import { motion } from 'framer-motion';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -58,7 +59,6 @@ const useStyles = createStyles((theme) => ({
       display: 'none',
     },
   },
-
   highlight: {
     position: 'relative',
     backgroundColor:
@@ -72,6 +72,7 @@ const useStyles = createStyles((theme) => ({
 
 export const Hero: React.FC = () => {
   const { classes } = useStyles();
+
   return (
     <div>
       <Container>

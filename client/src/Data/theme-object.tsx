@@ -6,7 +6,7 @@ export const themeObject: MantineThemeBase = {
   focusRing: 'auto',
   loader: 'oval',
   dateFormat: 'MMMM D, YYYY',
-  colorScheme: 'light',
+  colorScheme: 'dark',
   white: '#fff',
   black: '#000',
   defaultRadius: 'sm',

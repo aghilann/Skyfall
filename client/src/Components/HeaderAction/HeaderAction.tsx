@@ -133,12 +133,7 @@ export const HeaderAction: React.FC<HeaderActionProps> = ({ links }) => {
     }
     // Generate random string for key
     return (
-      <Link
-        key={link.label}
-        to={link.link}
-        className={classes.link}
-        onClick={(event) => event.preventDefault()}
-      >
+      <Link key={link.label} to={link.link} className={classes.link}>
         {link.label}
       </Link>
     );
