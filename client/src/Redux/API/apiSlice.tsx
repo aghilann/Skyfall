@@ -5,7 +5,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
   endpoints: (builder) => ({
     getLegacy: builder.query({
-      query: () => 'api/legacy',
+      query: (userID) => `api/legacy/${userID}`,
     }),
   }),
 });

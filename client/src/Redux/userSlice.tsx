@@ -22,9 +22,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    signInUser: (state: UserInterface, action: PayloadAction<any>) =>
-      action.payload,
-
+    signInUser: (state: UserInterface, action: PayloadAction<any>) => {
+      return action.payload;
+    },
     signOutUser: (state: UserInterface) => null,
   },
 });

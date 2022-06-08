@@ -23,9 +23,24 @@ export const signInUser = async (req: Request, res: Response) => {
         message: 'User with that email does not exist',
       });
     } else if (await bcrypt.compare(password, data.rows[0].password)) {
+      const {
+        id,
+        first_name: firstName,
+        middle_name: middleName,
+        last_name: lastName,
+        email,
+        date_created: dateCreated,
+      } = data.rows[0];
       // Redirect to designated Route
-      const { id } = data.rows[0];
-      res.json(data.rows[0]);
+      const myData = {
+        id,
+        firstName,
+        middleName,
+        lastName,
+        email,
+        dateCreated,
+      };
+      res.json(myData);
       // res.status(200).redirect(`/api/users, ${id}`);
     } else {
       res.status(401).json({
