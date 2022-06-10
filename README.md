@@ -143,7 +143,7 @@ Ensure you have the latest version of NodeJS and npm installed. This project use
   - [x] Got a prebuilt Navigation Bar from Mantine UI but heavily edited it to handle re-routing and added mobile responsiveness with Media Queries
   - [x] Set up the Sign-Up Sign-In Page, most of the work was connecting the UI to server. Done with native fetch and async await, not RTK Query
   - [x] Set up a singular routes for legacies, created a table for legacies with a foreign key constraint to users
-  - [x] With the getLegacy route established, begun work on stateful table with fully mutable data - data fetched using RTK Query
+  - [o] With the getLegacy route established, begun work on stateful table with fully mutable data - data fetched using RTK Query
    - [] This task is proving to be very difficult, multiple more routes most be created, decisions must be made on when to call the API 
    - [] Need to add the ability for users to add files and send it directly from the client to the Azure Blob   
 
