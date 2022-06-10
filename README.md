@@ -1,5 +1,3 @@
-# Skyfall
-
 <div id="top"></div>
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
@@ -27,10 +25,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">Personal Finance Tracker</h3>
+<h3 align="center">Skyfall</h3>
 
   <p align="center">
-    A dashboard to view your expenses, the value of your investments and the diversity of your portfolio.
+    A way to record legacy videos to be sent to your loved ones AND send scheduled recoded video messages.
     <br />
     <br />
     <br />
@@ -83,9 +81,14 @@
 ### Built With
 
 * [React.js](https://reactjs.org/)
+* [Express.js](https://mantine.dev/)
+* [Postgres](https://mantine.dev/)
 * [TypeScript](https://www.typescriptlang.org/)
+* [Microsft Azure](https://mantine.dev/)
 * [Mantine](https://mantine.dev/)
-* [Supabase](https://supabase.com/)
+* [Redux Toolkit](https://supabase.com/)
+* [Redux Toolkit Query](https://supabase.com/)
+* [Framer Motion](https://supabase.com/)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
