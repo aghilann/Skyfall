@@ -134,24 +134,28 @@ Ensure you have the latest version of NodeJS and npm installed. This project use
 
 <!-- ROADMAP -->
 ## Roadmap
+- [x] Set Up Database
+  - [x] Spent time researching how much info should really be in a user table and what should be relational
+  - [x] Setup the Postgres server in Microsoft Azure along with it's resource group 
 
-- [x] Navigation Bar
-  - [x] Implented Auth via Supabase Auth
-  - [x] Added Light and Dark Mode functionality using Mantine
-  - [x] Select a global color scheme 
-- [x] Expenses
-  - [x] Viewing Total's for Expense Categories
-  - [x] Created a rendering of the Expense Table
-  - [x] Added ability for user's to add Expenses
-- [x] Investments
-  - [x] Added the ability for User to add stock investments and their number of holdings
-  - [x] Implemented Autocomplete Functionality for stocks
-  - [x] Used React Query to fetch latest stock prices from Yahoo Finance API 
-  - [x] Created Grid of Cards displaying the latest value of each Stock
-  - [x] Visualized Portfolio Diversity using a Piechart from ReCharts
-- [x] Finance News
-  - [x] Used React Query to receive data from Microsft Azure News API display the headlines with the author, thumbnail and preview.      
-
+- [x] Set Up Server
+  - [x] Set up TS for ExpressJS
+  - [x] Setup ESLint and Prettier
+  - [x] Created a Postgres DB on Azure and connected it to server
+  - [x] Organized files into MVC design pattern - no views since backend functions as Restful JSON API
+  - [x] Created Routes and Controllers for Sign-Up and Sign-in with Error Handling for every unqique sitation (eg. user with email exists) 
+- [x] Setting up Client
+  - [x] Created Vite Project and setup Mantine
+  - [x] Established different Routes with React Router
+  - [x] Set up Redux and RTK Query Boilerplate
+  - [x] Used Framer Motion to animate these routers to add a transition between pages.
+- [x] Hard Work Begins
+  - [x] Got a prebuilt Navigation Bar from Mantine UI but heavily edited it to handle re-routing and added mobile responsiveness with Media Queries
+  - [x] Set up the Sign-Up Sign-In Page, most of the work was connecting the UI to server. Done with native fetch and async await, not RTK Query
+  - [x] Set up a singular routes for legacies, created a table for legacies with a foreign key constraint to users
+  - [x] With the getLegacy route established, begun work on stateful table with fully mutable data - data fetched using RTK Query
+   - [] This task is proving to be very difficult, multiple more routes most be created, decisions must be made on when to call the API 
+   - [] Need to add the ability for users to add files and send it directly from the client to the Azure Blob   
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
