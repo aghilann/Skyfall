@@ -12,6 +12,10 @@ import {
   createStyles,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import {
+  useGetLegacyQuery,
+  usePatchLegacyMutation,
+} from '../../Redux/API/legacySlice';
 import { useId, useUuid } from '@mantine/hooks';
 
 import { ILegacy } from '../../Types/index';
@@ -19,7 +23,6 @@ import { Key } from 'react';
 import { RootState } from '../../Redux/store';
 import { Trash } from 'tabler-icons-react';
 import format from 'date-fns/format';
-import { useGetLegacyQuery } from '../../Redux/API/apiSlice';
 import { useSelector } from 'react-redux';
 
 const useStyles = createStyles((theme) => ({
@@ -40,15 +43,15 @@ const useStyles = createStyles((theme) => ({
 export const LegacyTable: React.FC = () => {
   // Get the user's id from the redux store
   const currentUser = useSelector((state: RootState) => state.user);
-
   // Table won't rendered when user isnt signed in
   if (!currentUser) {
     return null;
   }
   // Destructuring what is returned from RTK Query
-  const { data, isLoading, error, isSuccess } = useGetLegacyQuery(
-    currentUser.id
-  );
+  const [patchLegacy] = usePatchLegacyMutation();
+  const { id: currentUserID } = currentUser;
+  const { data, isLoading, error, isSuccess } =
+    useGetLegacyQuery(currentUserID);
   const [legacy, setLegacy] = useState<ILegacy[]>([]);
   // Setting up legacy state
 
@@ -164,7 +167,7 @@ export const LegacyTable: React.FC = () => {
       {fields}
 
       <Group position="center" mt="md">
-        <Button
+        {/* <Button
           onClick={() => {
             setLegacy((legacy: any) => [
               ...legacy,
@@ -179,6 +182,18 @@ export const LegacyTable: React.FC = () => {
           }}
         >
           Add Legacy
+        </Button> */}
+        <Button
+          onClick={async () => {
+            console.log(legacy, currentUserID);
+            const res = await patchLegacy({
+              userID: currentUserID,
+              updates: legacy,
+            });
+            console.log(res);
+          }}
+        >
+          Console Log Legacy
         </Button>
       </Group>
     </Box>
