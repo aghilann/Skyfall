@@ -72,7 +72,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
- A dashboard to view your expenses, the value of your investments and the diversity of your portfolio.
+Skyfall allows users to record video messages which will be emailed to their loved ones once the user passes away or at a scheduled date, system also allows the user's to record video birthday messages to be sent to their friends and family on the recipient's birthday.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
