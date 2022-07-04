@@ -4,6 +4,7 @@ import {
   Button,
   Code,
   Group,
+  NumberInput,
   Paper,
   Switch,
   Text,
@@ -18,11 +19,14 @@ import {
 } from '../../Redux/API/legacySlice';
 import { useId, useUuid } from '@mantine/hooks';
 
+import { AddLegacyUser } from './AddLegacyUser';
 import { ILegacy } from '../../Types/index';
 import { Key } from 'react';
+import { Modal } from '@mantine/core';
 import { RootState } from '../../Redux/store';
 import { Trash } from 'tabler-icons-react';
 import format from 'date-fns/format';
+import { useForm } from '@mantine/hooks';
 import { useSelector } from 'react-redux';
 
 const useStyles = createStyles((theme) => ({
@@ -40,6 +44,23 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const handleDeleteLegacy = (id: Key) => {
+  console.log(id);
+
+  const deleteLegacy = async () => {
+    await fetch(`http://localhost:5000/api/legacy/123`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+    });
+  };
+  deleteLegacy();
+};
+
 export const LegacyTable: React.FC = () => {
   // Get the user's id from the redux store
   const currentUser = useSelector((state: RootState) => state.user);
@@ -53,16 +74,13 @@ export const LegacyTable: React.FC = () => {
   const { data, isLoading, error, isSuccess } =
     useGetLegacyQuery(currentUserID);
   const [legacy, setLegacy] = useState<ILegacy[]>([]);
-  // Setting up legacy state
-
+  const [opened, setOpened] = useState(false);
   const { classes } = useStyles();
 
   useEffect(() => {
-    console.log(legacy, data, 'Before');
     if (data) {
       setLegacy(data);
     }
-    console.log(legacy, data, 'After');
   }, [data]);
 
   if (isLoading) {
@@ -135,7 +153,10 @@ export const LegacyTable: React.FC = () => {
         <ActionIcon
           color="red"
           variant="hover"
-          onClick={() => setLegacy((prev) => prev.filter((i) => i.id !== id))}
+          onClick={() => {
+            setLegacy((prev) => prev.filter((i) => i.id !== id));
+            handleDeleteLegacy(id);
+          }}
         >
           <Trash size={16} />
         </ActionIcon>
@@ -193,8 +214,41 @@ export const LegacyTable: React.FC = () => {
             console.log(res);
           }}
         >
-          Console Log Legacy
+          Update Legacies
         </Button>
+        <Modal
+          opened={opened}
+          onClose={() => setOpened(false)}
+          title="Introduce yourself!"
+        >
+          {/* Modal content */}
+          {/* <Box sx={{ maxWidth: 340 }} mx="auto">
+            <form
+              onSubmit={addUserForm.onSubmit((values) => console.log(values))}
+            >
+              <TextInput
+                label="Receipient's Full Name"
+                placeholder="Name"
+                {...addUserForm.getInputProps('recipient')}
+              />
+              <TextInput
+                mt="sm"
+                label="Receipient's Email"
+                placeholder="Email"
+                {...addUserForm.getInputProps('recipientEmail')}
+              />
+
+              <Group position="right" mt="md">
+                <Button type="submit">Submit</Button>
+              </Group>
+            </form>
+          </Box> */}
+          <AddLegacyUser />
+        </Modal>
+
+        <Group position="center">
+          <Button onClick={() => setOpened(true)}>Open Modal</Button>
+        </Group>
       </Group>
     </Box>
   );

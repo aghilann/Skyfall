@@ -14,7 +14,19 @@ export const legacySlice = createApi({
         body: { updates: data.updates },
       }),
     }),
+
+    postLegacy: builder.mutation({
+      query: (data: any) => ({
+        url: `api/legacy/${data.userID}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetLegacyQuery, usePatchLegacyMutation } = legacySlice;
+export const {
+  useGetLegacyQuery,
+  usePatchLegacyMutation,
+  usePostLegacyMutation,
+} = legacySlice;
