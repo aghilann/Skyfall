@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.postLegacy = exports.deleteLegacy = exports.patchLegacy = exports.getLegacy = void 0;
+var getLegacy_1 = require("./getLegacy");
+Object.defineProperty(exports, "getLegacy", { enumerable: true, get: function () { return getLegacy_1.getLegacy; } });
+var patchLegacy_1 = require("./patchLegacy");
+Object.defineProperty(exports, "patchLegacy", { enumerable: true, get: function () { return patchLegacy_1.patchLegacy; } });
+var deleteLegacy_1 = require("./deleteLegacy");
+Object.defineProperty(exports, "deleteLegacy", { enumerable: true, get: function () { return deleteLegacy_1.deleteLegacy; } });
+var postLegacy_1 = require("./postLegacy");
+Object.defineProperty(exports, "postLegacy", { enumerable: true, get: function () { return postLegacy_1.postLegacy; } });

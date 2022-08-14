@@ -31,8 +31,8 @@ export const headerData = {
       label: 'Auth',
     },
     {
-      link: '/pricing',
-      label: 'Pricing',
+      link: '/contact',
+      label: 'Contact Us',
     },
     {
       link: '#2',

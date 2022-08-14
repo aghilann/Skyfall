@@ -1,4 +1,4 @@
-import { Auth, Home, Landing, NotFound404 } from '../../Pages/index';
+import {Auth, ContactPage, Home, Landing, NotFound404} from '../../Pages';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { AnimatePresence } from 'framer-motion';
@@ -19,7 +19,9 @@ export const AnimatedRoutes: React.FC = () => {
         <Route path="/" element={<Home transition={transition} />} />
         <Route path="/auth" element={<Auth transition={transition} />} />
         <Route path="/landing" element={<Landing transition={transition} />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<NotFound404 transition={transition} />} />
+
       </Routes>
     </AnimatePresence>
   );

@@ -1,10 +1,9 @@
-import {} from '@mantine/core';
-
 import { Box, Button, TextInput } from '@mantine/core';
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { Group, MantineTheme, Text, useMantineTheme } from '@mantine/core';
 import { Photo, Icon as TablerIcon, Upload, X } from 'tabler-icons-react';
 
+import { BlobServiceClient } from '@azure/storage-blob';
 import React from 'react';
 import { RootState } from '../../Redux/store';
 import { createStyles } from '@mantine/core';
@@ -12,7 +11,10 @@ import { useForm } from '@mantine/hooks';
 import { usePostLegacyMutation } from '../../Redux/API/legacySlice';
 import { useSelector } from 'react-redux';
 
-export interface IUser {
+const AZURE_STORAGE_CONNECTION_STRING =
+  'BlobEndpoint=https://sarim.blob.core.windows.net/;QueueEndpoint=https://sarim.queue.core.windows.net/;FileEndpoint=https://sarim.file.core.windows.net/;TableEndpoint=https://sarim.table.core.windows.net/;SharedAccessSignature=sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupitfx&se=2022-07-10T14:13:08Z&st=2022-07-10T06:13:08Z&spr=https&sig=P0SlVI1xRibe%2FaD7pKaaWWJZnb0NxerCuzyFmz7CEZY%3D';
+
+export interface UserInterface {
   id: string;
   firstName: string;
   middleName: string | null;
@@ -94,22 +96,45 @@ export const AddLegacyUser = () => {
       recipientEmail: '',
       recipient: '',
       link: '',
-      file: [new File([], '')],
+      file: [],
     },
   });
 
-  const currentUser: null | IUser = useSelector(
+  const currentUser: null | UserInterface = useSelector(
     (state: RootState) => state.user
   );
 
+  const onSubmitFiles = async () => {
+    let storageAccountName = 'sarim';
+    let sasToken =
+      'sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupitfx&se=2024-06-13T13:40:18Z&st=2022-06-13T05:40:18Z&spr=https,http&sig=fF5YXF4nUObXiuTRKE4WVQYhfqhyYFloKTGlNi8QzQ4%3D';
+
+    const blobService = new BlobServiceClient(
+      `https://${storageAccountName}.blob.core.windows.net/?${sasToken}`
+    );
+
+    for await (const currentFile of addUserForm.values.file) {
+      const containerClient = blobService.getContainerClient('test');
+      // @ts-ignore
+      const blobClient = containerClient.getBlockBlobClient(
+        `${currentUser.id}/${currentFile.name}` ||
+          'from' + currentUser!.id + ' to' + addUserForm.values.recipientEmail
+      );
+      const options = {
+        blobHTTPHeaders: { blobContentType: currentFile?.type },
+      };
+      await blobClient.uploadData(currentFile, options);
+    }
+  };
   const handleSubmit = async () => {
     const data = {
       ...addUserForm.values,
       link: 'google.com',
       userID: currentUser!.id,
     };
-    console.log(data);
+    await onSubmitFiles();
     await patchLegacy(data);
+    console.log(data);
   };
 
   // validate: {
